@@ -41,7 +41,7 @@ def equalizing_resolution(synthetic_spectra,synthetic_frequency,reduced_observed
     
     #Uses gtools to read the spectra and then equalizes the resolution and returns the equilized resolution
     syn=gtools.read(random_number+'_synthetic')
-    syn.equalize_resolution()
+    syn.equalize_resolution(synthetic=True)
     os.remove(random_number+'_synthetic.fits')
     
     return syn.f

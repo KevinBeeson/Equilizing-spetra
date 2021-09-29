@@ -253,7 +253,7 @@ class spectrum:
 
             self.convolve(s_conv,extend=True)
 
-    def equalize_resolution(self, r='lowest', precision=0.005, kernel='galah'):
+    def equalize_resolution(self, r='lowest', precision=0.005, kernel='galah',synthetic=False):
         """
         Convolves a spectrum with a kernel with a variable width. Works by warping the data, performing the convolution and unwarping the data, so it is vectorized (mostly) and fast
         Parameters:
@@ -283,10 +283,17 @@ class spectrum:
             s_target[r>s_target]=r
         else:
             logging.error('Parameter r must be either \'lowest\' or a number.')
-
+            
+            
+        if type(synthetic)==int or type(synthetic)==float:
+            theoretical_resolution=synthetic
+        else:
+            theoretical_resolution=0.0001
         #original sigma
-        s_original=self.res_map
-
+        if synthetic==False:
+            s_original=self.res_map
+        else:
+            s_original=np.ones(len(self.res_map))*theoretical_resolution
         #the sigma of the kernel is:
         s=s_original
 
